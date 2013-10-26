@@ -15,13 +15,21 @@ $ ->
         item.popup({on:'click', html:html_string})
         list.append(item)
       
-    filter_by_subject = (subject) ->
+    filter = (string, index) ->
       items = $("li")
       items.removeClass("selected")
       for i in [0...items.length]
         list_item = $(items[i])
-        if list_item.data()[1] == subject
+        if list_item.data()[index] == string
           list_item.addClass("selected")
       
-    $("select").change( -> filter_by_subject($("select").val()) )
+    $("select").change( -> filter($("select").val(), 1) )
+    
+    clear = ->
+      $("li").removeClass("selected")
+    
+    $("#clear").click(clear)
+    $("li").click( (event) ->
+      filter($(event.target).data()[2], 2)
+    )
   )

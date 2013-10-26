@@ -3,7 +3,7 @@
 
   $(function() {
     return $.get("class_schedule.csv", function(data, other) {
-      var block, class_data, data_by_block, filter_by_subject, html_string, item, line, list, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+      var block, class_data, clear, data_by_block, filter, html_string, item, line, list, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
       data = data.split("\n");
       data = (function() {
         var _i, _len, _results;
@@ -43,14 +43,14 @@
           list.append(item);
         }
       }
-      filter_by_subject = function(subject) {
+      filter = function(string, index) {
         var i, items, list_item, _l, _ref2, _results;
         items = $("li");
         items.removeClass("selected");
         _results = [];
         for (i = _l = 0, _ref2 = items.length; 0 <= _ref2 ? _l < _ref2 : _l > _ref2; i = 0 <= _ref2 ? ++_l : --_l) {
           list_item = $(items[i]);
-          if (list_item.data()[1] === subject) {
+          if (list_item.data()[index] === string) {
             _results.push(list_item.addClass("selected"));
           } else {
             _results.push(void 0);
@@ -58,8 +58,15 @@
         }
         return _results;
       };
-      return $("select").change(function() {
-        return filter_by_subject($("select").val());
+      $("select").change(function() {
+        return filter($("select").val(), 1);
+      });
+      clear = function() {
+        return $("li").removeClass("selected");
+      };
+      $("#clear").click(clear);
+      return $("li").click(function(event) {
+        return filter($(event.target).data()[2], 2);
       });
     });
   });
