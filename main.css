@@ -1,0 +1,21 @@
+.column-header {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  border-bottom: 1px solid black;
+  padding: 5px;
+  width: 100%;
+}
+
+li:hover {
+  background-color: Gainsboro;
+}
+
+li.selected {
+  background-color: #CC0000;
+}

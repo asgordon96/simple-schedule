@@ -2,7 +2,66 @@
 (function() {
 
   $(function() {
-    return console.log("Hello Coffeescript");
+    return $.get("class_schedule.csv", function(data, other) {
+      var block, class_data, data_by_block, filter_by_subject, html_string, item, line, list, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+      data = data.split("\n");
+      data = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          line = data[_i];
+          _results.push(line.split(","));
+        }
+        return _results;
+      })();
+      data_by_block = {
+        A: [],
+        B: [],
+        C: [],
+        D: [],
+        E: [],
+        F: []
+      };
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        line = data[_i];
+        data_by_block[line[0]].push(line);
+      }
+      _ref = Object.keys(data_by_block);
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        block = _ref[_j];
+        list = $("." + block);
+        _ref1 = data_by_block[block];
+        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
+          class_data = _ref1[_k];
+          item = $("<li></li>").text("" + class_data[2]);
+          item.data(class_data);
+          html_string = "<h3>" + class_data[2] + "</h3><p>" + class_data[3] + "</p><p>Room: " + class_data[4] + "</p>";
+          item.popup({
+            on: 'click',
+            html: html_string
+          });
+          list.append(item);
+        }
+      }
+      filter_by_subject = function(subject) {
+        var i, items, list_item, _l, _ref2, _results;
+        items = $("li");
+        items.removeClass("selected");
+        _results = [];
+        for (i = _l = 0, _ref2 = items.length; 0 <= _ref2 ? _l < _ref2 : _l > _ref2; i = 0 <= _ref2 ? ++_l : --_l) {
+          list_item = $(items[i]);
+          if (list_item.data()[1] === subject) {
+            _results.push(list_item.addClass("selected"));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      };
+      return $("select").change(function() {
+        return filter_by_subject($("select").val());
+      });
+    });
   });
 
 }).call(this);
