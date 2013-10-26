@@ -18,5 +18,9 @@ li:hover {
 }
 
 li.selected {
-  background-color: #CC0000;
+  background-color: #37BD50;
+}
+
+li.choice {
+  background-color: red;
 }

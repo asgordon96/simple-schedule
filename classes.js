@@ -65,8 +65,11 @@
         return $("li").removeClass("selected");
       };
       $("#clear").click(clear);
-      return $("li").click(function(event) {
+      $("li").click(function(event) {
         return filter($(event.target).data()[2], 2);
+      });
+      return $("li").dblclick(function(event) {
+        return $(event.target).toggleClass("choice");
       });
     });
   });

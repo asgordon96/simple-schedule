@@ -32,4 +32,8 @@ $ ->
     $("li").click( (event) ->
       filter($(event.target).data()[2], 2)
     )
+    
+    $("li").dblclick( (event) ->
+      $(event.target).toggleClass("choice")
+    )
   )
